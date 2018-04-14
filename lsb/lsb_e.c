@@ -42,9 +42,6 @@ int main(int argc,char** argv){
 		printf("Can`t create output file %s\n", argv[2]);
 		exit(1);
 	}
-	
-
-	int c = 0;
 
 	/* Generate file with the same header. Copy first 128 bytes */
 	char buf_sig_cpy;
@@ -55,7 +52,6 @@ int main(int argc,char** argv){
 	for(int i = 0; i < offset; i++){
 		buf_sig_cpy = fgetc(file_handle);
 		fputc(buf_sig_cpy, hidden_message_handle);
-		c++;
 	}
 
 	// Made file as .bmp
@@ -71,7 +67,6 @@ int main(int argc,char** argv){
 	int hidden_message_length = get_message_length(message_handle);
 
 	fputc(hidden_message_length, hidden_message_handle);
-	c++;
 	do {
 		int bit_of_message;
 
@@ -90,7 +85,7 @@ int main(int argc,char** argv){
 					if(file_byte_lsb == 0)
 						file_buffer = (file_buffer | 1);
 					else
-						file_buffer = (file_buffer & ~1);
+						file_buffer = (file_buffer & 254);
 					//  logic to flip the LSB bit of file_buffer and put it into a file with putc()
 					fputc(file_buffer, hidden_message_handle);
 				}
@@ -99,7 +94,6 @@ int main(int argc,char** argv){
 		else{
 			buf_sig_cpy = fgetc(file_handle);
 			fputc(buf_sig_cpy, hidden_message_handle);
-			c++;
 		}
 	} while(!feof(file_handle));
 
