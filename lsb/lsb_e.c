@@ -66,7 +66,6 @@ int main(int argc,char** argv){
 	}
 	int hidden_message_length = get_message_length(message_handle);
 
-	fputc(hidden_message_length, hidden_message_handle);
 	do {
 		int bit_of_message;
 
