@@ -42,11 +42,17 @@ int main(int argc,char** argv){
 		printf("Can`t create output file %s\n", argv[2]);
 		exit(1);
 	}
-
-	/* Generate file with the same header. Copy first 128 bytes */
+	
+	fseek(file_handle, 28, SEEK_SET);
+	int depth = (int)fgetc(file_handle);
+	if(depth < 24){
+		printf("Too depressive colors for me. Try anything else, please.\n");
+		return 1;
+	} 
+	rewind(file_handle);
+	
 	char buf_sig_cpy;
 	int offset = get_image_data_offset(file_handle);
-
 	rewind(file_handle);
 
 	for(int i = 0; i < offset; i++){
@@ -71,7 +77,7 @@ int main(int argc,char** argv){
 
 		if(!feof(message_handle)){		
 			message_buffer = fgetc(message_handle);
-			for(int i = 0; i < 8; i++){  //Do this for every bit in every byte of the original image
+			for(int i = 0; i < 8; i++){  //Do this for every bit in every byte of the original text
 				file_buffer = fgetc(file_handle);
 				int file_byte_lsb = file_buffer & 1; 
 
@@ -85,7 +91,7 @@ int main(int argc,char** argv){
 						file_buffer = (file_buffer | 1);
 					else
 						file_buffer = (file_buffer & 254);
-					//  logic to flip the LSB bit of file_buffer and put it into a file with putc()
+					//  flip the LSB bit of file_buffer and put it into a file with putc()
 					fputc(file_buffer, hidden_message_handle);
 				}
 			}
