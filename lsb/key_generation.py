@@ -10,7 +10,7 @@ def main():
         print("\_0_0_/")
         exit(2)
     dump = len(file_.read())
-    print(dump)
+    print(f"Your key is: {dump}")
     file_.close()
 
 if len(sys.argv) != 2:
