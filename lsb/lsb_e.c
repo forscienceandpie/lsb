@@ -17,7 +17,7 @@ int get_message_length(FILE *fp){
 	fseek(fp, 0, SEEK_END);
 	int size = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	return(size);
+	return size;
 }
 
 int main(int argc,char** argv){
@@ -46,7 +46,7 @@ int main(int argc,char** argv){
 	fseek(file_handle, 28, SEEK_SET);
 	int depth = (int)fgetc(file_handle);
 	if(depth < 24){
-		printf("Too depressive colors for me. Try anything else, please.\n");
+		printf("Not enough colors for me. Try anything else, please.\n");
 		return 1;
 	} 
 	rewind(file_handle);
@@ -62,7 +62,7 @@ int main(int argc,char** argv){
 
 	// Made file as .bmp
 
-	char file_buffer; 			// Temp variable for one byte from file
+	char file_buffer; 		// Temp variable for one byte from file
 	char message_buffer;		// Temp buffer for one byte of message
 
 	message_handle = fopen(argv[3], "r");
@@ -70,7 +70,6 @@ int main(int argc,char** argv){
 		printf("Can't open text input file %s\n", argv[3]);
 		exit(1);
 	}
-	int hidden_message_length = get_message_length(message_handle);
 
 	do {
 		int bit_of_message;
