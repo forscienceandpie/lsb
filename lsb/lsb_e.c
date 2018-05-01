@@ -90,7 +90,7 @@ int main(int argc,char** argv){
 						file_buffer = (file_buffer | 1);
 					else
 						file_buffer = (file_buffer & 254);
-					//  flip the LSB bit of file_buffer and put it into a file with putc()
+					//  flip the LSB bit of file_buffer
 					fputc(file_buffer, hidden_message_handle);
 				}
 			}
