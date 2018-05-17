@@ -7,7 +7,7 @@ int get_bit(char _byte,int which_bit){
 }
 
 int get_image_data_offset(FILE *bmp_offset){
-	fseek(bmp_offset, 10, 0);
+	fseek(bmp_offset, 55, 0);
 	int offset;
 	offset = (int)fgetc(bmp_offset);
 	return offset;
